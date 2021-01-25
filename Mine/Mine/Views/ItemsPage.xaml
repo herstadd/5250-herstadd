@@ -50,7 +50,7 @@
                                        FontSize="16" />
                                 <Label Text="{Binding Value}"
                                        LineBreakMode="NoWrap" 
-                                       Style="{DynamicResource ListItemTextStyle}" 
+                                       Style="{DynamicResource ListItemDetailTextStyle}" 
                                        FontSize="16" />
                             </StackLayout>
                             <Label Text="{Binding Description}" 
