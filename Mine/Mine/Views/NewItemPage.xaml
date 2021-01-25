@@ -19,7 +19,10 @@
             
             <Label Text="Description" FontSize="Medium" />
             <Editor Text="{Binding Item.Description}" d:Text="Item description" FontSize="Small" Margin="0" />
-            
+
+            <Label Text="Value" FontSize="Medium" />
+            <Editor Text="{Binding Item.Value}" d:Text="Item value" FontSize="Small" Margin="0"/>
+
         </StackLayout>
     </ContentPage.Content>
     
