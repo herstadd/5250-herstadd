@@ -28,6 +28,13 @@ namespace Mine.ViewModels
                 await DataStore.CreateAsync(newItem);
             });
 
+            MessagingCenter.Subscribe<ItemDeletePage, ItemModel>(this, "DeleteItem", async (obj, item) =>
+            {
+                var data = item as ItemModel;
+
+                await DeleteAsync(data);
+            });
+
             MessagingCenter.Subscribe<ItemUpdatePage, ItemModel>(this, "UpdateItem", async (obj, item) =>
             {
                 var data = item as ItemModel;
@@ -54,6 +61,29 @@ namespace Mine.ViewModels
 
             var canExecute = LoadItemsCommand.CanExecute(null);
             LoadItemsCommand.Execute(null);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Delete the record from the system
+        /// </summary>
+        /// <param name="data">The Record to Delete</param>
+        /// <returns>True if Deleted</returns>
+        public async Task<bool> DeleteAsync(ItemModel data)
+        {
+            //check if record exists, if not, return null
+            var record = await ReadAsync(data.Id);
+            if (record == null)
+            {
+                return false;
+            }
+
+            //Remove from local data set cache
+            DataSet.Remove(data);
+
+            // Call to remove it from the Data Store
+            var result = await DataStore.DeleteAsync(data.Id);
 
             return result;
         }
