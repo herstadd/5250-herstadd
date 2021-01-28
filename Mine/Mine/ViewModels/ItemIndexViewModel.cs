@@ -28,15 +28,20 @@ namespace Mine.ViewModels
                 await DataStore.CreateAsync(newItem);
             });
 
-            MessagingCenter.Subscribe<ItemDeletePage, ItemModel>(this, "DeleteItem", async (obj, item) =>
+            MessagingCenter.Subscribe<ItemUpdatePage, ItemModel>(this, "UpdateItem", async (obj, item) =>
             {
                 var data = item as ItemModel;
-                await DeleteAsync(data);
+                await UpdateAsync(data);
             });
 
         }
 
-        public async Task<bool> DeleteAsync (ItemModel data)
+        /// <summary>
+        /// Update the record from the system
+        /// </summary>
+        /// <param name="data">The Record to Update</param>
+        /// <returns>True if Updated</returns>
+        public async Task<bool> UpdateAsync(ItemModel data)
         {
             var record = await ReadAsync(data.Id);
             if (record == null)
@@ -44,11 +49,11 @@ namespace Mine.ViewModels
                 return false;
             }
 
-            //Remove from the local data set cache
-            DataSet.Remove(data);
-
             // Call to remove it from the Data Store
-            var result = await DataStore.DeleteAsync(data.Id);
+            var result = await DataStore.UpdateAsync(data);
+
+            var canExecute = LoadItemsCommand.CanExecute(null);
+            LoadItemsCommand.Execute(null);
 
             return result;
         }
