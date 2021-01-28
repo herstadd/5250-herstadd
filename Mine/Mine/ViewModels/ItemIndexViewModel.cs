@@ -29,6 +29,23 @@ namespace Mine.ViewModels
             });
         }
 
+        public async Task<bool> DeleteAsync (ItemModel data)
+        {
+            var record = await ReadAsync(data.Id);
+            if (record == null)
+            {
+                return false;
+            }
+
+            //Remove from the local data set cache
+            DataSet.Remove(data);
+
+            // Call to remove it from the Data Store
+            var result = await DataStore.DeleteAsync(data.Id);
+
+            return result;
+        }
+
         /// <summary>
         /// Read an item from the datastore
         /// </summary>
