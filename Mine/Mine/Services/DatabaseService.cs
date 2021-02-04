@@ -35,6 +35,11 @@ namespace Mine.Services
             }
         }
 
+        /// <summary>
+        /// Connects the create page to use the database
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
         public async Task<bool> CreateAsync(ItemModel item)
         {
             if (item == null)
@@ -51,6 +56,11 @@ namespace Mine.Services
             return true;
         }
 
+        /// <summary>
+        /// Connects the update page to use the database
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
         public async Task<bool> UpdateAsync(ItemModel item)
         {
             if (item == null)
@@ -67,6 +77,11 @@ namespace Mine.Services
             return true;
         }
 
+        /// <summary>
+        /// Connects the delete page to use the database
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<bool> DeleteAsync(string id)
         {
             var data = await ReadAsync(id);
@@ -84,6 +99,11 @@ namespace Mine.Services
             return true;
         }
 
+        /// <summary>
+        /// Connects the read page to use the database
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public Task<ItemModel> ReadAsync(string id)
         {
             if (id == null)
@@ -98,6 +118,11 @@ namespace Mine.Services
             return result;
         }
 
+        /// <summary>
+        /// Connect the index page to use the database
+        /// </summary>
+        /// <param name="forceRefresh"></param>
+        /// <returns></returns>
         public async Task<IEnumerable<ItemModel>> IndexAsync(bool forceRefresh = false)
         {
             var result = await Database.Table<ItemModel>().ToListAsync();
